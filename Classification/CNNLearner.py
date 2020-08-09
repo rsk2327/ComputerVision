@@ -242,6 +242,30 @@ class CNNLearner():
 
         path = os.path.join(self.modelFolder, filename)
         torch.save(self.model, path)
+        
+        
+    def predict(testLoader):
+        
+        self.model.eval()
+        
+        targetList = []
+        predList = []
+
+        with torch.no_grad():
+
+            for data, labels in tqdm(testLoader):
+
+                data,labels = data.to(self.device), labels.to(self.device)
+                outputs = self.model(data)
+                _, preds = torch.max(outputs, 1)
+
+                targetList.append(labels.detach().cpu().numpy())
+                predList.append(preds.detach().cpu().numpy())
+
+        targetList = np.concatenate(targetList)
+        predList = np.concatenate(predList)
+
+        return targetList, predList
 
 
 
