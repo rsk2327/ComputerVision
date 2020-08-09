@@ -11,7 +11,6 @@ import copy
 import warnings
 warnings.filterwarnings('ignore')
 
-from progressbar import progressbar
 import datetime
 
 from tqdm import tqdm
@@ -287,3 +286,13 @@ def unfreezeLayers(net):
 			param.requires_grad = True
 			
 	return net
+
+
+def getDirFiles(directory):
+    fileList = []
+
+    for dirpath, subdirs, files in os.walk(directory):
+        for x in files:
+            fileList.append(os.path.join(dirpath, x))
+            
+    return fileList
